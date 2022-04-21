@@ -53,58 +53,70 @@ const gameController =  (function(){
 
     // check win
 
-    const _checkRows = () => {
-        for (let i = 0; i < 3; i++) {
-            let row = []
-            for (let j = i * 3; j < i * 3 + 3; j++) {
-                row.push(gameBoard.getBoard(j));
-            }
-            if (row.every(field => field == 'X') || row.every(field => field == 'O')) {
-                return true;
-            }
-        } return false;
-    }
-    const _checkColumns = () => {
-        for (let i = 0; i < 3; i++) {
-            let column = []
-            for (let j = 0; j < 3; j++) {
-                column.push(gameBoard.getBoard(i + 3 * j));
-            }
-            if (column.every(field => field == 'X') || column.every(field => field == 'O')) {
-                return true;
-            }
-        } return false;
-    }
-    const _checkDiagonals = () => {
+    const _checkDiagonal = () => {
         diagonal1 = [gameBoard.getBoard(0), gameBoard.getBoard(4), gameBoard.getBoard(8)];
-        diagonal2 = [gameBoard.getBoard(6), gameBoard.getBoard(4), gameBoard.getBoard(2)];
+        diagonal2 = [gameBoard.getBoard(2), gameBoard.getBoard(4), gameBoard.getBoard(6)];
         if (diagonal1.every(field => field == 'X') || diagonal1.every(field => field == 'O')) {
             return true;
         }
         else if (diagonal2.every(field => field == 'X') || diagonal2.every(field => field == 'O')) {
             return true;
-        }
-    }
+        };
+    };
+
+    const _checkRow = () => {
+        for (let i = 0; i < 3; i++) {
+            let row = [];
+            for (let k = i * 3; k < i * 3 + 3; k++) { 
+                // [0, 1, 2]; [3, 4, 5]; [6, 7, 8]
+                // can be simplified to 
+                // row1 = [gameBoard.getBoard(0), gameBoard.getBoard(1), gameBoard.getBoard(2)]
+                // row2 = [gameBoard.getBoard(3), gameBoard.getBoard(4), gameBoard.getBoard(5)]
+                // row3 = [gameBoard.getBoard(6), gameBoard.getBoard(7), gameBoard.getBoard(8)]
+                row.push(gameBoard.getBoard(k));
+            }
+            if (row.every(field => field == 'X') || row.every(field => field == 'O')) {
+                return true;
+            }   //if using commented code "else if" is required
+        } return false;
+    };
+
+    const _checkColumn = () => {
+        for (let i = 0; i < 3; i++) {
+            let column = [];
+            for (let k = 0; k < 3; k++) {
+                // [0, 3, 6]; [2, 4, 7]; [3, 5, 8]
+                // can be simplified to
+                // column1 = [gameBoard.getBoard(0), gameBoard.getBoard(3), gameBoard.getBoard(6)]
+                // column2 = [gameBoard.getBoard(2), gameBoard.getBoard(4), gameBoard.getBoard(7)]
+                // column3 = [gameBoard.getBoard(3), gameBoard.getBoard(5), gameBoard.getBoard(8)] 
+                column.push(gameBoard.getBoard(i + 3 * k));
+            }
+            if (column.every(field => field == 'X') || column.every(field => field == 'O')) {
+                return true;
+            }
+        } return false;
+    };
 
     const checkWin = (board) => {
-        if (_checkRows(board) || _checkColumns(board) || _checkDiagonals(board)) {
+        if (_checkDiagonal(board) || _checkColumn(board) || _checkRow(board)) {
             return true;
-        }
+        };
         return false;
-    }
+    };
 
     const checkDraw = (board) => {
         if (checkWin(board)) {
             return false;
-        }
+        };
         for (let i = 0; i < 9; i++) {
             const field = gameBoard.getBoard(i);
             if (field == undefined) {
                 return false;
             }
-        }
+        };
         return true;
-    }
+    };
 
     // check if game is over
 
