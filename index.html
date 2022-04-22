@@ -5,26 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Six+Caps');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+
+    </style> 
     <title>Document</title>
 </head>
 <body>
-    <div class="gameContainer">
-        <div class="gameBoard">
-            <!-- T = top; C = center; B = bottom; L = left; R = right -->
-          <div class="field tl" data-index="0"></div>
-          <div class="field tc" data-index="1"></div>
-          <div class="field tr" data-index="2"></div>
-          <div class="field cl" data-index="3"></div>
-          <div class="field cc" data-index="4"></div>
-          <div class="field cr" data-index="5"></div>
-          <div class="field bl" data-index="6"></div>
-          <div class="field bc" data-index="7"></div>
-          <div class="field br" data-index="8"></div>
+    <div class="endGameWindow" hidden>
+        <div class="endGameModal">
+            <div class="endGameMessage">Player X Won The Game</div>
+            <div class="restart">
+                <button class="restartButton" >Restart</button>
+            </div>
+        </div>
+    </div>
+
+    <header class="header"> Tic-Tac-Toe </header>
+    <div class="messages">
+        <div class="playerTurn">Player X's Turn</div>
+    </div>
+    <div class="fullContainer">
+        <div class="gameContainer">
+            <div class="player1">
+                <div class="playerX">Player X:</div>
+                <div class="player1Score">0</div>
+            </div>
+            <div class="gameBoard">
+                <!-- T = top; C = center; B = bottom; L = left; R = right -->
+                <div class="field tl" data-index="0"></div>
+                <div class="field tc" data-index="1"></div>
+                <div class="field tr" data-index="2"></div>
+                <div class="field cl" data-index="3"></div>
+                <div class="field cc" data-index="4"></div>
+                <div class="field cr" data-index="5"></div>
+                <div class="field bl" data-index="6"></div>
+                <div class="field bc" data-index="7"></div>
+                <div class="field br" data-index="8"></div>
+            </div>
+            <div class="player2">
+                <div class="playerO">Player O:</div>
+                <div class="player2Score">0</div>
+            </div>
         </div>
         <div class="reset">
-          <button class="resetButton">Restart</button>
+          <button class="resetButton">Reset</button>
         </div>
-      </div>
+    </div>
+    
 
     <script src="script.js"></script>
 </body>

@@ -10,27 +10,36 @@ const gameBoard = (function(){
     return {getBoard, resetBoard, setBoard}
 })();
 
-const Player = (flag) => {
+const Player = (flag, score) => {
     let _flag = flag;
+    let _score = score;
+    const getScore = () => _score
+    const addScore = () => score = _score++;
     const getFlag = () => _flag;
-    return { getFlag }
+    const resetScore = () => _score = 0;
+    return { 
+        getFlag, 
+        getScore, 
+        addScore,
+        resetScore}
 }
 
 const gameController =  (function(){
   
     // initialize players
-    const _player1 = Player("X")
-    const _player2 = Player("O")
+    const _player1 = Player("X", 0)
+    const _player2 = Player("O", 0)
 
-    const getPlayer1 = () => _player1;
-    const getPlayer2 = () => _player2;
-
-    //init state
+    // init state
 
     let round = 1;
     let isOver = false;
 
     // get current player
+
+    const addPlayerScore = () => {
+        return round % 2 === 1 ? _player1.addScore() : _player2.addScore()
+        }
 
     const getCurrentFlag = () => {
         return round % 2 === 1 ? _player1.getFlag() : _player2.getFlag();
@@ -41,14 +50,21 @@ const gameController =  (function(){
     const playRound = (index) => {
         gameBoard.setBoard(index, getCurrentFlag()); 
         if (checkWin()) {
+            addPlayerScore();
+            setPlayerScore()
+            setWinEndGame();
+            restartMessage()
             isOver = true;
             return;
         }
         if (checkDraw()) {
+            setDrawEndGame();
+            restartMessage()
             isOver = true;
             return;
         }
         round++;
+        setCurrentPlayer();
     }
 
     // check win
@@ -125,22 +141,74 @@ const gameController =  (function(){
     const reset = () => {
         round = 1;
         isOver = false;
+        displayController.setNotifier("");
+        setCurrentPlayer()
+    }
+
+    // Play again
+
+    
+    const restartMessage = () => {
+        if (_player1.getScore() == 5 || _player2.getScore() == 5) {
+            displayController.setEndGameMessage(`Player ${getCurrentFlag()} is the Winner!`)
+            const endGameWindow = document.querySelector(".endGameWindow");
+            const fullContainer = document.querySelector(".fullContainer");
+            fullContainer.style.filter = 'blur(2px)';
+            endGameWindow.style.display = 'flex';
+        } 
+    }
+
+    const restartGame = () => {
+        _player1.resetScore();
+        _player2.resetScore();
+        setCurrentPlayer();
+        setPlayerScore();
+        round = 1;
+        isOver = false;
+        document.querySelector('.endGameWindow').hidden = false;
+    }
+
+    // textContent 
+
+    const setCurrentPlayer = () => {
+        displayController.setNotifier(`Player ${getCurrentFlag()}'s Turn`)
+    }
+
+    const setWinEndGame = () => {
+        displayController.setNotifier(`Player ${getCurrentFlag()} Won`)
+    }
+
+    const setDrawEndGame = () => {
+        displayController.setNotifier("It's a Draw")
+    }
+
+    const setPlayerScore = () => {
+        displayController.setPlayer1Score(`${_player1.getScore()}`)
+        displayController.setPlayer2Score(`${_player2.getScore()}`)
     }
 
     return {
-        getPlayer1,
-        getPlayer2,
         checkWin,
         checkDraw, 
         checkOver,
         reset,
         playRound,
+        setPlayerScore,
+        restartGame,
     }
 })();
 
 const displayController = (function(){
     const fields = document.querySelectorAll(".field");
-    const resetButton = document.querySelector('.resetButton')
+    const resetButton = document.querySelector(".resetButton");
+    const restartButton = document.querySelector(".restartButton")
+    const playerTurn = document.querySelector(".playerTurn");
+    const endGameMessage = document.querySelector(".endGameMessage")
+    const player1Score = document.querySelector(".player1Score")
+    const player2Score = document.querySelector(".player2Score")
+    const endGameWindow = document.querySelector(".endGameWindow");            
+    const fullContainer = document.querySelector(".fullContainer");
+
 
     fields.forEach((field) => {
         field.addEventListener("click", (e) => {
@@ -155,10 +223,41 @@ const displayController = (function(){
         gameController.reset();
         updateDisplay();
     })
+    
+    restartButton.addEventListener("click", (e) => {
+        gameBoard.resetBoard();
+        gameController.restartGame();
+        updateDisplay();
+        endGameWindow.style.display = 'none'
+        fullContainer.style.filter = `blur(0)`;
+
+    })
 
     const updateDisplay = () => {
         for (let i = 0; i < fields.length; i++) {
             fields[i].textContent = gameBoard.getBoard(i);
           }
     }
+
+    const setNotifier = (txt) => {
+        playerTurn.textContent = txt;
+    }
+
+    const setEndGameMessage = (txt) => {
+        endGameMessage.textContent = txt;
+    }
+
+    const setPlayer1Score = (txt) => {
+        player1Score.textContent = txt;
+    }
+
+    const setPlayer2Score = (txt) => {
+        player2Score.textContent = txt;
+    }
+    
+    return {
+        setNotifier, 
+        setEndGameMessage,
+        setPlayer1Score, 
+        setPlayer2Score}
 })();

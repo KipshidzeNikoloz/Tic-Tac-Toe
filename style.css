@@ -1,31 +1,113 @@
-.gameContainer{
+body {
+    height: 100%;
+    width: 100%;
+    background-color: #14181c;
+    position: absolute;
+    margin: 0;
+}
+/* Header */
+
+.header{
+    display: flex;   
+    background-color: #14181c;
+    height: 1em;
+    width: 100vw;
+    justify-content: center;
+    font-weight: bolder;
+    font-size: 7em;
+    color: #ffffff;
+    margin: 0;
+    font-family: six caps;
+    text-transform: uppercase;
+    background-size: 100%;
+    color: white;
+    letter-spacing: .3em;
+    text-shadow: .07em .07em 0 #14181c, .1em .1em 0 white;
+}
+/* Game */
+
+
+.messages{
+    margin: 20px 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    color: white;
+    font-family: six caps;
+    letter-spacing: 0.19em;
+    font-size: 3em;
+}
+
+.fullContainer{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    z-index: 0;
 }
 
-
+.gameContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
 
 .gameBoard{
     display: grid;
     grid-template-columns: 8vw 8vw 8vw;
     grid-template-rows: 8vw 8vw 8vw;
-    margin: 20px;
+    margin: 20px 20px 10px 20px;
 }
 
+
+.resetButton{
+    justify-self: flex-start;
+    align-self: flex-start;
+    background-color: rgb(31, 58, 37);
+    cursor: pointer;
+    font-size: 1.6em;
+    padding: 0.4em 1.4em;
+    border: 2px solid rgb(31, 58, 37);
+    border-radius: 7px;
+    cursor: pointer;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.player1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-size: 3em;
+    font-family: six caps;
+    letter-spacing: 0.19em;
+}
+
+.player2{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-size: 3em;
+    font-family: six caps;
+    letter-spacing: 0.19em;
+}
 
 .field {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 30px;
-    background-color: #3d6765;
-    color: #12232E;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 5em;
+    background-color: #3e5c5a;
+    color: #0d1820;
     border: none;
     border-radius: 0px;
-    border-bottom: 2.2px solid black;
-    border-right: 2.2px solid black;
+    border-bottom: 2.2px solid rgb(194, 194, 194);
+    border-right: 2.2px solid rgb(194, 194, 194);
 }
 
 
@@ -51,4 +133,58 @@
 
 .field.br{
     border-bottom: none;
+}
+
+/* END GAME MODAL */
+
+
+.endGameWindow{
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: fixed;
+    z-index: 12;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    border: solid 2px black;
+    backdrop-filter: blur(100px);
+}
+
+.endGameModal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid #2f3741;
+    border-radius: 15px;
+    background-color: #222a33bd;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    margin: 10px;
+    font-size: 3em;
+    font-weight: 600;
+    width: 30%;
+    height: 40%;
+    box-shadow: 15px 15px 7px rgba(0, 0, 0, 0.9);
+}
+
+.endGameMessage{
+    color: white;
+    padding: 20px 0 20px 0;
+    margin: 0 0 1em 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.restartButton{
+    background-color: rgb(31, 58, 37);
+    border: 3px solid rgb(19, 36, 23);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.6em;
+    padding: 0.6em 1.8em;
+    cursor: pointer;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
 }
