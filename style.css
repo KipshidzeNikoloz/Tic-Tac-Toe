@@ -76,6 +76,11 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.resetButton:hover{
+    transition: all 0.15s ease;
+    background-color: rgb(47, 88, 56);
+}
+
 .player1{
     display: flex;
     flex-direction: column;
@@ -108,6 +113,11 @@ body {
     border-radius: 0px;
     border-bottom: 2.2px solid rgb(194, 194, 194);
     border-right: 2.2px solid rgb(194, 194, 194);
+}
+
+.field:hover{
+    background-color: #2e4443;
+    transition: all 0.15s ease;
 }
 
 
@@ -187,4 +197,8 @@ body {
     cursor: pointer;
     color: white;
     font-family: 'Montserrat', sans-serif;
+}
+.restartButton:hover{
+    transition: all 0.15s ease;
+    background-color: rgb(47, 88, 56);
 }
